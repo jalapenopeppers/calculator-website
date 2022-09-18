@@ -71,6 +71,12 @@ function organizeInput(inputArray) {
 let buttons = document.querySelectorAll('button');
 let canPlaceDecimal = true;
 for (button of buttons) {
+  button.addEventListener('mousedown', (e) => {
+    e.target.classList.add('pressed');
+  });
+  button.addEventListener('mouseup', (e) => {
+    e.target.classList.remove('pressed');
+  });
   if (!isNaN(button.textContent)) {
     button.addEventListener('click', (e) => {
       inputArray.push(e.target.textContent);

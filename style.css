@@ -1,7 +1,12 @@
 body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   background-color: rgba(238, 203, 199, 0.601);
+  align-items: center;
+  justify-content: space-between;
 }
 .display,
 button {
@@ -11,6 +16,7 @@ button {
 
 .calculator-body {
   width: 300px;
+  margin-top: 50px;
   border: 2px groove darkgray;
   background-color: rgb(153, 202, 245);
   border-radius: 5px;
@@ -21,10 +27,11 @@ button {
 
 .display {
   width: 270px;
-  height: 30px;
+  min-height: 40px;
   background-color: rgb(254, 255, 232);
   display: flex;
   align-items: center;
+  word-break: break-all;
   margin-top: 15px;
   padding-left: 5px;
   border: 2px groove darkgrey;
@@ -47,8 +54,33 @@ button {
   flex: 0 0 auto;
   border: 2px groove darkgrey;
   border-radius: 5px;
+  transition: 0.1s all;
+}
+
+.pressed {
+  transform: scale(0.9);
+}
+
+button:hover {
+  background-color: rgb(152, 178, 200);
 }
 
 .clear {
   font-size: 14px;
+}
+
+.footer {
+  padding: 10px;
+  font-family: "OCR A Std", monospace;
+  color: rgb(58, 58, 58);
+  text-align: center;
+  display: flex;
+  background-color: white;
+  align-self: stretch;
+  justify-content: center;
+  align-items: center;
+}
+
+.github-link {
+  margin-left: 10px;
 }
