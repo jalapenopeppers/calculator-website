@@ -1,17 +1,17 @@
 function add(a,b) {
-  return a + b;
+  return Number(a) + Number(b);
 }
 
 function subtract(a,b) {
-  return a - b;
+  return Number(a) - Number(b);
 }
 
 function multiply(a,b) {
-  return  a * b;
+  return Number(a) * Number(b);
 }
 
 function divide(a,b) {
-  return a / b;
+  return Number(a) / Number(b);
 }
 
 function operate(a, operatorStr, b) {
@@ -59,17 +59,16 @@ function organizeInput(inputArray) {
       temp = temp + char;
     }
     else {
-      organizedInputArray.push(Number(temp));
+      organizedInputArray.push(temp);
       temp = '';
       organizedInputArray.push(char);
     }
   }
-  organizedInputArray.push(Number(temp));
+  organizedInputArray.push(temp);
   return organizedInputArray;
 }
 
 let buttons = document.querySelectorAll('button');
-let canPlaceDecimal = true;
 for (button of buttons) {
   button.addEventListener('mousedown', (e) => {
     e.target.classList.add('pressed');
@@ -88,7 +87,6 @@ for (button of buttons) {
              button.classList.contains('division')) {
     button.addEventListener('click', (e) => {
       if (!isNaN(inputArray[inputArray.length - 1]) && inputArray !== []) {
-        canPlaceDecimal = true;
         inputArray.push(e.target.textContent);
         updateDisplay();
       }
@@ -96,7 +94,6 @@ for (button of buttons) {
   } else if (button.classList.contains('equals')) {
     button.addEventListener('click', (e) => {
       inputArray = organizeInput(inputArray);
-      console.log(inputArray);
       let result = operate(inputArray[0], inputArray[1], inputArray[2]);
       result = Math.round(result * 1000) / 1000;
       inputArray = [];
@@ -113,10 +110,6 @@ for (button of buttons) {
       //temporary array used to avoid reorganizing inputArray until needed
       let tempArray = organizeInput(inputArray);
       if (!isNaN(inputArray[inputArray.length - 1]) && inputArray !== [] && !tempArray[tempArray.length - 1].toString().includes('.')) {
-        canPlaceDecimal = false;
-        console.log(tempArray[tempArray.length - 1].toString().includes('.'));
-        console.log(tempArray);
-        //CONTINUE HERE
         inputArray.push('.');
         updateDisplay();
       }
