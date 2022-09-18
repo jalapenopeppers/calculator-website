@@ -55,7 +55,7 @@ function organizeInput(inputArray) {
   let organizedInputArray = [];
   let temp = '';
   for (char of inputArray) {
-    if (!isNaN(char)) {
+    if (!isNaN(char) || char === '.') {
       temp = temp + char;
     }
     else {
@@ -69,13 +69,20 @@ function organizeInput(inputArray) {
 }
 
 let buttons = document.querySelectorAll('button');
+let canPlaceDecimal = true;
 for (button of buttons) {
-  if (!button.classList.contains('equals') && !button.classList.contains('clear')) {
+  if (!isNaN(button.textContent)) {
     button.addEventListener('click', (e) => {
-      if (!isNaN(inputArray[inputArray.length - 1] || inputArray === [])) {
-        inputArray.push(e.target.textContent);
-        updateDisplay();
-      } else if (!isNaN(e.target.textContent)) {
+      inputArray.push(e.target.textContent);
+      updateDisplay();
+      });
+  } else if (button.classList.contains('addition') ||
+             button.classList.contains('subtraction') ||
+             button.classList.contains('multiplication') ||
+             button.classList.contains('division')) {
+    button.addEventListener('click', (e) => {
+      if (!isNaN(inputArray[inputArray.length - 1]) && inputArray !== []) {
+        canPlaceDecimal = true;
         inputArray.push(e.target.textContent);
         updateDisplay();
       }
@@ -93,6 +100,24 @@ for (button of buttons) {
   } else if (button.classList.contains('clear')) {
     button.addEventListener('click', (e) => {
       inputArray = [];
+      updateDisplay();
+    })
+  } else if (button.classList.contains('decimal')) {
+    button.addEventListener('click', (e) => {
+      //temporary array used to avoid reorganizing inputArray until needed
+      let tempArray = organizeInput(inputArray);
+      if (!isNaN(inputArray[inputArray.length - 1]) && inputArray !== [] && !tempArray[tempArray.length - 1].toString().includes('.')) {
+        canPlaceDecimal = false;
+        console.log(tempArray[tempArray.length - 1].toString().includes('.'));
+        console.log(tempArray);
+        //CONTINUE HERE
+        inputArray.push('.');
+        updateDisplay();
+      }
+    })
+  } else if (button.classList.contains('delete')) {
+    button.addEventListener('click', (e) => {
+      inputArray.pop();
       updateDisplay();
     })
   }
